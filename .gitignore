@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment and Lock Files
+.env
+bun.lock
+package-lock.json
+
+# IDE and Editor Settings
+.idea/
+.vscode/
+*.swp
+
+# Build Artifacts (If you ever compile CSS or JS)
+dist/
+build/
+out/
+
+# Logs and Temporary files
+*.log
+npm-debug.log*
+
+# OS specific files
+.DS_Store
+Thumbs.db
