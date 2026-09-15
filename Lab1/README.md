@@ -14,3 +14,6 @@ https://github.com/bohdanlutsiuk/HTMLCSS.git
 ```
 2. Navigate to Lab1
 3. Open `index.html` in your favourite web browser
+
+## Try the hosted version here:
+https://htmlcss-bice.vercel.app/
