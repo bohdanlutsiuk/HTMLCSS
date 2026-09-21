@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Specificity</title>
+    <style>
+      p.text#red-p {
+        color: red;
+      }
+
+      .text.text.text.text.text.text {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Specificity</h1>
+    </header>
+    <main>
+      <p class="text" id="red-p">And now I'm red, surely</p>
+    </main>
+  </body>
+</html>

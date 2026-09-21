@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Variables</title>
+    <style>
+      :root {
+        --brown-red: #7c1804;
+        --ice-blue: #5a90e6;
+        --hot-orange: #ed4723;
+      }
+
+      span {
+        color: var(--hot-orange);
+      }
+
+      .round-frame {
+        border-radius: 5px;
+        border: 1px solid var(--brown-red);
+        color: var(--brown-red);
+        padding: 0.2rem;
+      }
+
+      h1 {
+        color: var(--ice-blue);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Variables</h1>
+    </header>
+    <main>
+      <p><span>I'm red</span></p>
+      <p><span class="round-frame">And I have a frame</span></p>
+    </main>
+  </body>
+</html>
