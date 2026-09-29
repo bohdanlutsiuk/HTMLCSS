@@ -551,8 +551,9 @@ a {
 
 .social a {
   display: inline-flex;
-  width: 18px;
-  height: 18px;
+  margin-right: 4px;
+  width: 25px;
+  height: 25px;
 }
 
 .legal {

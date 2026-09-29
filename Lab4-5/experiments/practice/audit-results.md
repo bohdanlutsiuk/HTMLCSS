@@ -21,9 +21,9 @@ After 3 Google Lighthouse performance testing iterations:
 
 ## Other checks
 - Accessibility (manual): Performed successful keyboard test, also checked accessibility tree.
-- Accessibility (Lighthouse): Performed a test with score of 97
+- Accessibility (Lighthouse): Performed a test with score of 100
 - LCP: Cut 2 seconds of load making it just 0.54 s
 - CLS: Remained 0.109
 - TBT: Remained 0 ms
 - Performance: Took leap from 82 to 97
-- SEO: Remained 63 for not unblocking indexing (which is very intentional)
+- SEO: Increased from 63 to 100 mostly for removing noindex meta tag
