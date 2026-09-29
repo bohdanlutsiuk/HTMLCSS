@@ -38,12 +38,14 @@ body {
 }
 
 :focus {
-  outline: none;
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
 }
 
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 h1,
@@ -131,16 +133,24 @@ a {
 }
 
 .nav {
+  margin-right: auto;
+}
+
+.nav__list {
   display: flex;
   gap: 24px;
+  list-style: none;
   margin-right: auto;
+  padding: 0;
 }
 
 .nav-item {
   font-size: 15px;
   font-weight: 500;
-  color: #374151;
+  color: var(--ink-soft);
+  text-decoration: none;
   cursor: pointer;
+  transition: color 0.2s;
 }
 
 .nav-item:hover {
@@ -155,8 +165,9 @@ a {
 
 .link-quiet {
   font-size: 15px;
-  color: #374151;
+  color: var(--ink-soft);
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 .link-quiet:hover {
@@ -178,6 +189,20 @@ a {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 8px;
+  box-shadow: 0 0 0 4px var(--brand-tint);
+}
+
+.btn:active,
+.button:active {
+  transform: translateY(1px);
+  filter: brightness(0.9);
 }
 
 .btn--primary,
@@ -396,7 +421,7 @@ a {
 .faq__a {
   display: none;
   padding-bottom: 20px;
-  color: #374151;
+  color: var(--ink-soft);
 }
 
 .faq__item.is-open .faq__a {
@@ -430,14 +455,50 @@ a {
   gap: 12px;
 }
 
-.trial__input {
+.trial__field {
   flex: 1 1 210px;
   max-width: 260px;
+  position: relative;
+}
+
+.trial__input {
+  width: 100%;
   padding: 13px 16px;
-  border: 0;
+  border: 2px solid transparent;
   border-radius: 10px;
   font: inherit;
   font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.trial__input:focus {
+  outline: none;
+  border-color: var(--surface);
+}
+
+.trial__input.is-invalid {
+  border-color: #fca5a5;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.error-message {
+  display: block;
+  font-size: 12px;
+  color: #fca5a5;
+  margin-top: 4px;
+  text-align: left;
+  min-height: 1.2em;
 }
 
 /* Footer */
@@ -473,8 +534,9 @@ a {
 }
 
 .site-footer a {
-  color: #374151;
+  color: var(--ink-soft);
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 .site-footer a:hover {
