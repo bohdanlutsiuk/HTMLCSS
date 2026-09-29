@@ -1,7 +1,7 @@
 # Core Web Vitals 
 
 ## Metrics at step 4.7
-Over 3 Google Lighthouse performance testing iterations:
+After 3 Google Lighthouse performance testing iterations:
 - General score: 82.33
 - FCP: 0.43 s
 - LCP: 2.6 s
