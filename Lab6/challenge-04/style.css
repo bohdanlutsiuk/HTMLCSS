@@ -1,0 +1,11 @@
+/* Challenge 4. Subgrid: aligned cards.
+   Спочатку — рішення без subgrid, потім — із subgrid.
+   Ваш CSS — тут. */
+
+.cards {
+    display: grid;
+}
+
+.card {
+    grid: grid;
+}

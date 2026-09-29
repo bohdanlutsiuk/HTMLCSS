@@ -1,0 +1,7 @@
+/* Challenge 2. Grid: adaptive card layout.
+   Ваш CSS — тут. */
+
+section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
