@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /css/
+Disallow: /img/
+Disallow: /admin/
+Disallow: /experiments/
+
+Sitemap: https://htmlcss-bice.vercel.app/Lab4-5/sitemap.xml
