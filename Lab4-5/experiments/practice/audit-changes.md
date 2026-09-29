@@ -6,6 +6,7 @@
 | SEO | Page title doesn't fully describe content | Updated `<title>` to "FlowTask — Project Management for Teams that Ship Every Week". | Verified title in `<head>`. |
 | SEO | Missing meta description                  | Added `<meta name="description">` tag. | Verified tag in `<head>`. |
 | SEO | No open graph meta tags                   | Added `og:title`, `og:description`, `og:image`, and `og:type` tags. | Verified tags in `<head>`. |
+| SEO | `noindex` meta tag | Removed `noindex` meta tag | Verified tag in `<head>` |
 | Accessibility | Image missing alt text                    | Added descriptive `alt` text to the hero image and updated testimonial avatars. | Checked all `<img>` tags for `alt` attributes. |
 | Accessibility | Links without discernible text            | Added `aria-label` to social media links and "Sign in" link. | Verified `aria-label` presence. |
 | Accessibility | Non-semantic navigation                   | Replaced `div.nav-item` with `<a>` tags inside a `<ul>` list. | Checked navigation structure and Tab focus. |
