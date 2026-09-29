@@ -74,11 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('load', () => {
     setTimeout(() => {
-      const promo = document.createElement('div');
-      promo.className = 'promo';
-      promo.innerHTML =
+      const promoSlot = document.querySelector('.promo-slot');
+      promoSlot.className = 'promo-slot promo';
+      promoSlot.className = 'promo';
+      promoSlot.innerHTML =
         '<strong>Autumn offer</strong> 3 months of Pro for the price of one. <a href="#pricing">See plans</a>';
-      document.body.insertBefore(promo, document.body.firstChild);
+      document.body.insertBefore(promoSlot, document.body.firstChild);
     }, 800);
   });
 });

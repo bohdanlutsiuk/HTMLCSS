@@ -46,11 +46,10 @@ Time and date: 29/09/2026 18:11
 ## AI accessibility report checks
 
 ### Page hidden from indexing
-- Problem is showing if page is supposed to be indexed
+- Problem is showing
 - Can be checked with devtools or Google Console url inspection
 - Source: https://developers.google.com/search/docs/crawling-indexing/robots/intro
-- This suggestion won't be implemented
-- I don't really understand if the page is supposed to be indexed. Better leave it as is
+- This suggestion will be implemented
 
 ### Non-semantic navigation elements
 - Yes, it is there
@@ -77,9 +76,6 @@ Time and date: 29/09/2026 18:11
 - This suggestion will be implemented
 
 ## Denied suggestions
-
-### Page hidden from indexing
-I'm not sure about the intention, so it stays there
 
 ### Modern image formats not used
 Does affect performance a little, but isn't breaking accessibility or doing any other evil 

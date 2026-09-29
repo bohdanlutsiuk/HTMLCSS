@@ -251,6 +251,10 @@ a {
   font-size: 19px;
 }
 
+.promo-slot {
+  min-height: 116.9px;
+}
+
 /* Hero */
 
 .hero {
