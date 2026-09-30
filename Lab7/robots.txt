@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /styles/
+Disallow: /img/
+Disallow: /mockup/
+Disallow: /courtly-assets/README.md
+Disallow: /courtly-assets/SPEC.md
+
+Sitemap: https://htmlcss-bice.vercel.app/Lab7/sitemap.xml
