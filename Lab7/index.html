@@ -18,7 +18,10 @@
     <meta property="og:image" content="courtly-assets/img/og-image.jpg" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://htmlcss-bice.vercel.app/Lab7/" />
-    <meta property="og:image" content="https://htmlcss-bice.vercel.app/Lab7/img/og-image.jpg" />
+    <meta
+      property="og:image"
+      content="https://htmlcss-bice.vercel.app/Lab7/courtly-assets/img/og-image.jpg"
+    />
 
     <!-- Favicon -->
     <link rel="icon" href="courtly-assets/favicon.svg" type="image/svg+xml" />
@@ -60,11 +63,11 @@
 
         <nav id="main-nav" class="nav">
           <ul class="nav__list">
-            <li class="nav__item"><a href="#search" class="nav__link">Знайти майданчик</a></li>
-            <li class="nav__item"><a href="#how-it-works" class="nav__link">Як це працює</a></li>
-            <li class="nav__item"><a href="#about" class="nav__link">Про нас</a></li>
+            <li class="nav__item"><a href="#venues" class="nav__link">Знайти майданчик</a></li>
+            <li class="nav__item"><a href="#how" class="nav__link">Як це працює</a></li>
+            <li class="nav__item"><a href="#contacts" class="nav__link">Про нас</a></li>
           </ul>
-          <a href="#book" class="btn btn--primary btn--nav">Забронювати</a>
+          <a href="#venues" class="btn btn--primary btn--nav">Забронювати</a>
         </nav>
       </div>
     </header>
@@ -100,27 +103,31 @@
 
         <!-- Search Form -->
         <div class="container">
-          <form id="search" class="search-form">
+          <form id="venues" class="search-form" action="#venues">
             <div class="search-form__field">
-              <label for="sport" class="search-form__label">Вид спорту</label>
-              <select id="sport" class="search-form__input">
-                <option value="tennis">Теніс</option>
-                <option value="football">Футбол</option>
-                <option value="basketball">Баскетбол</option>
+              <label for="location" class="search-form__label">Місто</label>
+              <select id="location" class="search-form__input" required>
+                <option value="">Оберіть місто</option>
+                <option value="kyiv">Київ</option>
+                <option value="lviv">Львів</option>
+                <option value="odesa">Одеса</option>
+                <option value="kharkiv">Харків</option>
+                <option value="dnipro">Дніпро</option>
               </select>
             </div>
             <div class="search-form__field">
-              <label for="location" class="search-form__label">Місто чи район</label>
-              <input
-                type="text"
-                id="location"
-                class="search-form__input"
-                placeholder="Наприклад, Печерськ"
-              />
+              <label for="sport" class="search-form__label">Вид спорту</label>
+              <select id="sport" class="search-form__input" required>
+                <option value="">Будь-який</option>
+                <option value="football">Футбол</option>
+                <option value="tennis">Теніс</option>
+                <option value="basketball">Баскетбол</option>
+                <option value="volleyball">Волейбол</option>
+              </select>
             </div>
             <div class="search-form__field">
               <label for="date" class="search-form__label">Дата</label>
-              <input type="date" id="date" class="search-form__input" />
+              <input type="date" id="date" class="search-form__input" required />
             </div>
             <button type="submit" class="btn btn--primary search-form__submit">Знайти</button>
           </form>
@@ -185,7 +192,9 @@
                     <span class="card__price-amount">600 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--primary">Забронювати</a>
+                  <button type="button" class="btn btn--primary">
+                    Забронювати<span class="visually-hidden"> Arena Sport</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -220,7 +229,9 @@
                     <span class="card__price-amount">450 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--outline">Забронювати</a>
+                  <button type="button" class="btn btn--outline">
+                    Забронювати<span class="visually-hidden"> Tennis Point</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -255,7 +266,9 @@
                     <span class="card__price-amount">300 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--outline">Забронювати</a>
+                  <button type="button" class="btn btn--outline">
+                    Забронювати<span class="visually-hidden"> Riverside Court</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -290,7 +303,9 @@
                     <span class="card__price-amount">400 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--outline">Забронювати</a>
+                  <button type="button" class="btn btn--outline">
+                    Забронювати<span class="visually-hidden"> Smash Club</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -325,7 +340,9 @@
                     <span class="card__price-amount">800 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--outline">Забронювати</a>
+                  <button type="button" class="btn btn--outline">
+                    Забронювати<span class="visually-hidden"> City Football</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -360,7 +377,9 @@
                     <span class="card__price-amount">350 грн</span>
                     <span class="card__price-unit">/год</span>
                   </div>
-                  <a href="#" class="btn btn--outline">Забронювати</a>
+                  <button type="button" class="btn btn--outline">
+                    Забронювати<span class="visually-hidden"> Active Hall</span>
+                  </button>
                 </div>
               </div>
             </article>
@@ -369,39 +388,39 @@
       </section>
 
       <!-- How It Works Section -->
-      <section id="how-it-works" class="section section--alt">
+      <section id="how" class="section section--alt">
         <div class="container">
           <header class="section__header">
             <h2 class="section__title">Як забронювати корт?</h2>
             <p class="section__description">Три простих кроки до вашої наступної гри</p>
           </header>
 
-          <div class="steps">
-            <div class="step">
+          <ul class="steps">
+            <li class="step">
               <div class="step__number">01</div>
               <h3 class="step__title">Оберіть локацію</h3>
               <p class="step__text">
                 Виберіть вид спорту, зручний район та час гри у нашому каталозі.
               </p>
-            </div>
-            <div class="step">
+            </li>
+            <li class="step">
               <div class="step__number">02</div>
               <h3 class="step__title">Забронюйте онлайн</h3>
               <p class="step__text">Миттєве підтвердження броні без дзвінків та очікування.</p>
-            </div>
-            <div class="step">
+            </li>
+            <li class="step">
               <div class="step__number">03</div>
               <h3 class="step__title">Насолоджуйтесь грою</h3>
               <p class="step__text">
                 Приходьте на майданчик у визначений час і грайте у задоволення.
               </p>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </section>
 
       <!-- About/Info Section -->
-      <section id="about" class="section about">
+      <section id="contacts" class="section about">
         <div class="container about__container">
           <div class="about__image-wrapper">
             <img
@@ -489,11 +508,10 @@
         </div>
 
         <div class="footer__nav">
-          <h3 class="footer__title">Підтримка</h3>
+          <h3 class="footer__title">Контакти</h3>
           <ul class="footer__list">
-            <li><a href="#" class="footer__link">Допомога</a></li>
-            <li><a href="#" class="footer__link">Контакти</a></li>
-            <li><a href="#" class="footer__link">Правила</a></li>
+            <li><a href="mailto:hello@courtly.com" class="footer__link">hello@courtly.com</a></li>
+            <li><a href="tel:+380441234567" class="footer__link">+380 44 123 45 67</a></li>
           </ul>
         </div>
 
