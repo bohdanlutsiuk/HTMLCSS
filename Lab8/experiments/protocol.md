@@ -43,7 +43,6 @@
 
 </td>
 <td></td>
-<td></td>
 </tr>
 <tr>
 <td>2</td>
@@ -75,7 +74,6 @@ false
 ```
 
 </td>
-<td></td>
 <td></td>
 </tr>
 <tr>
