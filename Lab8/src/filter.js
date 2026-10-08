@@ -16,5 +16,19 @@
  * @returns {Show[]}
  */
 export function filterShows(shows, options) {
-  throw new Error('Not implemented');
+  if (!options) {
+    return [...shows];
+  }
+  return shows.filter((show) => {
+    if (options.query && !show.name.toLowerCase().includes(options.query.trim().toLowerCase())) {
+      return false;
+    }
+    if (options.genre && !show.genres.includes(options.genre)) {
+      return false;
+    }
+    if (options.minRating && show.rating < options.minRating) {
+      return false;
+    }
+    return true;
+  });
 }
