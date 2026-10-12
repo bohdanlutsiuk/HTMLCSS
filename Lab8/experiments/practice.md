@@ -18,15 +18,15 @@ This challenge also wasn't too hard. Although I did have problems with copying a
 The quirks were dealing with `null` values once again and comparing values.
 
 ## 5.5. Challenge 3 — `sortShows`
-This part took quite a bit of time. I struggled with deviding strings from numbers and managing reference values. Also getting the direction right was problematic, but I figured it out in the end.  
+This part took quite a bit of time. I struggled with dividing strings from numbers and managing reference values. Also getting the direction right was problematic, but I figured it out in the end.  
 The quirks were not changing input array, not changing any input reference values accidentally and working with `sort()`.
 
 ## 5.6. Challenge 4 — `genreStats`
 There I took some time trying to understand how do `groupBy()` and `reduce()` work. I ended up not using them in the end. The `Record` also didn't have `map()` which disappointed me a little.  
-The quirks were aggregating input data counting `0` but not `null` ones. I also got caught at `Math.round()` not understanding why can't I set how many values after the dot to leave in parameter.   
+The quirks were aggregating input data counting `0` but not `null` ones. I also got caught at `Math.round()` not understanding why can't I set how many digits after the dot to leave in parameters.   
 
 ## 5.7. Challenge 5 — `createCounter`, `once`, `memoize`
-This one does seem really simple at first, but it got me in the worst moment of the day when by brain doesn't really function right, so it was hard. I spent some time at `once()` trying to figure out why it returns `NaN`. It was fixed of `...args` in return function parameters.  
+This one does seem really simple at first, but it got me in the worst moment of the day when my brain doesn't really function right, so it was hard. I spent some time at `once()` trying to figure out why it returns `NaN`. It was fixed of `...args` in return function parameters.  
 The quirks were getting count `variable` at `counter` to not be accessible from outside, not activating `fn()` second time at `once()` and getting `memoize()` to work with different types including `undefined`, `false`, `0`.
 
 ## Summary
