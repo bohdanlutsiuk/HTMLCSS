@@ -29,10 +29,10 @@ export function renderShows(list) {
     });
 
     const yearEl = card.querySelector('[data-field="year"]');
-    if (yearEl) yearEl.textContent = show.year?.toString() || '';
+    if (yearEl) yearEl.textContent = show.year?.toString() || '—';
 
     const genresEl = card.querySelector('[data-field="genres"]');
-    if (genresEl) genresEl.textContent = show.genres.join(', ');
+    if (genresEl) genresEl.textContent = show.genres.join(', ') || '—';
 
     const ratingEl = card.querySelector('[data-field="rating"]');
     if (ratingEl) ratingEl.textContent = show.rating?.toString() || '—';
