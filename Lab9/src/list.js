@@ -1,4 +1,4 @@
-import { watchlist } from './state.js';
+import { toggle } from './state.js';
 import { openDetails } from './details.js';
 
 /**
@@ -26,17 +26,13 @@ export function initList(refresh) {
     const action = actionBtn.dataset.action;
 
     if (action === 'toggle') {
-      if (watchlist.has(showId)) {
-        watchlist.delete(showId);
-      } else {
-        watchlist.add(showId);
-      }
+      toggle(showId);
       refresh();
 
       const newCard = results.querySelector(`[data-id="${showId}"]`);
       if (newCard) {
         const newBtn = newCard.querySelector('[data-action="toggle"]');
-        if (newBtn instanceof HTMLElement) newBtn.focus();
+        newBtn.focus();
       }
     } else if (action === 'details') {
       openDetails(showId);
