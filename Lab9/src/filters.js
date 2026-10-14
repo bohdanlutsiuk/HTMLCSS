@@ -7,8 +7,15 @@
  * @returns {Filters}
  */
 export function readFilters() {
-  // TODO C3
-  return {};
+  const form = document.querySelector('#filters');
+  if (!form) return {};
+
+  const formData = new FormData(form);
+  return {
+    query: formData.get('query')?.toString() || '',
+    genre: formData.get('genre')?.toString() || '',
+    mine: formData.get('mine') === 'on',
+  };
 }
 
 /**
@@ -18,5 +25,13 @@ export function readFilters() {
  * @param {() => void} refresh перемальовує список для поточних фільтрів
  */
 export function initFilters(refresh) {
-  // TODO C3
+  const form = document.querySelector('#filters');
+  if (!form) return;
+
+  form.addEventListener('input', () => refresh());
+  form.addEventListener('change', () => refresh());
+  form.addEventListener('reset', () => {
+    // reset подія спрацьовує до очищення форми, тому чекаємо наступного тіку
+    setTimeout(refresh, 0);
+  });
 }

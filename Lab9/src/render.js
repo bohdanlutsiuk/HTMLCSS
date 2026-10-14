@@ -1,4 +1,4 @@
-import { watchlist, notes } from './state.js';
+import { watchlist, notes, shows } from './state.js';
 
 /** @typedef {import('./state.js').Show} Show */
 
@@ -68,7 +68,7 @@ export function renderShows(list) {
   if (count === 0) {
     statusEl.textContent = 'Нічого не знайдено';
   } else {
-    statusEl.textContent = `Знайдено: ${count} з ${count}`;
+    statusEl.textContent = `Знайдено: ${count} з ${shows.length}`;
   }
 
   const watchlistCountEl = document.querySelector('#watchlist-count');
