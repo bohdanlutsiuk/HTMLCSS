@@ -34,4 +34,8 @@ export function initFilters(refresh) {
     // reset подія спрацьовує до очищення форми, тому чекаємо наступного тіку
     setTimeout(refresh, 0);
   });
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    refresh();
+  });
 }
