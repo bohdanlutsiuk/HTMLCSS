@@ -70,4 +70,9 @@ export function renderShows(list) {
   } else {
     statusEl.textContent = `Знайдено: ${count} з ${count}`;
   }
+
+  const watchlistCountEl = document.querySelector('#watchlist-count');
+  if (watchlistCountEl) {
+    watchlistCountEl.textContent = watchlist.size.toString();
+  }
 }
