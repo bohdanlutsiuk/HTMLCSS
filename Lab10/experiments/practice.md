@@ -124,3 +124,28 @@ The selector in `main.js` should be more specific, targeting `.menu-toggle` inst
 - const menuToggle = document.querySelector('.site-header button');
 + const menuToggle = document.querySelector('.menu-toggle');
 ```
+
+### Issue 2: Incorrect status message update (Race condition in UI)
+
+**1. Expected vs Actual behavior:**
+*   **Expected:** After clicking "Find", the status line (`#status`) should show "Шукаємо…" (Searching...) and then update to "Знайдено: X" once results are loaded.
+*   **Actual:** Because there are two separate `submit` listeners on the same form in `main.js`, they run almost simultaneously. The first one (line 34) is `async` and awaits `fetchVenues`. The second one (line 48) is synchronous and immediately checks `results.children.length`.
+*   **Result:** The status message flashes "Шукаємо…", but then *immediately* changes to "Популярні майданчики: 6" (or whatever was there before) because the second listener finishes before the first one's `await` completes. The actual search results count only appears if the first listener wins the race or after the `fetch` finishes, but the second listener effectively overwrites "Шукаємо…" with the *old* count immediately.
+
+**2. Elements in DevTools:**
+*   **Element:** `p#status`
+*   **Role:** `status`.
+*   **Event Listeners:** Two `submit` listeners on `#search-form`.
+
+**3. Console verification:**
+*   `getEventListeners(document.getElementById('search-form')).submit` returns an array of 2 functions.
+*   Executing the search and checking `document.getElementById('status').textContent` quickly shows it doesn't stay on "Шукаємо…" as long as the latency (400ms-1200ms) would suggest.
+
+**4. Discrepancy:**
+Code in `main.js:36` sets `status.textContent = 'Шукаємо…'`, but `main.js:50` (in a different listener for the same event) immediately sets it based on `results.children.length` *before* the new results are rendered.
+
+**5. DOM Breakpoint:**
+"Break on subtree modifications" on `#status` shows two consecutive changes immediately after clicking "Submit".
+
+**6. AI Analysis & Patch:**
+The status update logic should be unified within the `async` handler to ensure it reflects the state *after* the results are rendered.
