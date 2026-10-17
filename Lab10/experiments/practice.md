@@ -149,3 +149,60 @@ Code in `main.js:36` sets `status.textContent = 'Шукаємо…'`, but `main.
 
 **6. AI Analysis & Patch:**
 The status update logic should be unified within the `async` handler to ensure it reflects the state *after* the results are rendered.
+
+## 5.5 Scenario C - Event Loop
+
+### Issue 1: UI State Overwrite due to overlapping async operations
+
+**1. Steps to reproduce:**
+1. Open the page `index.html`.
+2. Very quickly (within the first 400ms of loading) click the **"Знайти"** (Find) button.
+3. Observe the status message (`#status`).
+
+**Actual order of messages in UI:**
+- "Завантаження…" (Initial HTML)
+- "Шукаємо…" (Triggered by manual search)
+- "Популярні майданчики: 6" (WRONG - Initial load finished and overwrote the search status)
+- "Знайдено: 12" (Search results finally arrived)
+
+**Logs for verification:**
+```
+registering submit listener
+started fetchVenues(popular: true)
+user clicked Find
+status = 'Шукаємо…', started fetchVenues(city: '')
+resolved!
+status = 'Популярні майданчики: 6'
+resolved!
+status = 'Знайдено: 12'
+```
+
+**2. Explanation of the order:**
+- **Synchronous start:** `main.js` runs as a module. It registers the `submit` listener and starts the initial `fetchVenues`. Then it hits a top-level `await` at line 63. This **suspends** the module evaluation.
+- **Task Queue (User Interaction):** While the module is suspended, the user interacts with the page. Since the listener was already registered (synchronously, before the `await`), the `handleSearch` function is called.
+- **Async Split:** `handleSearch` is also `async`. It updates the UI to "Шукаємо…", starts its own fetch, and **suspends** at its `await`.
+- **Microtask Queue (Resumption):** When the initial fetch timer expires (Web API), its promise resolves. The continuation of the `main.js` module (lines 64-67) is pushed to the **Microtask Queue**.
+- **The Defect:** Even though the user has already started a search, the module's initial flow is still "alive" and resumes as soon as its promise resolves. It unconditionally updates `status.textContent` to reflect the popular venues, ignoring the fact that a more recent asynchronous operation (the search) is in progress.
+- **Final Microtask:** Eventually, the search fetch resolves, and its microtask updates the UI correctly.
+
+**3. Execution Scheme:**
+
+```
+Call Stack -> fetchVenues(popular) -> Web API (Timer 400ms)
+Call Stack -> await (main.js suspended)
+... User Interaction ...
+Call Stack -> handleSearch() -> status = 'Шукаємо…'
+Call Stack -> fetchVenues(search) -> Web API (Timer 400ms+)
+Call Stack -> await (handleSearch suspended)
+... Timer 1 expires ...
+Task Queue -> setTimeout callback -> Resolve Promise 1
+Microtask Queue -> [main.js continuation] -> status = 'Популярні майданчики: 6' (OVERWRITE)
+... Timer 2 expires ...
+Task Queue -> setTimeout callback -> Resolve Promise 2
+Microtask Queue -> [handleSearch continuation] -> status = 'Знайдено: X'
+```
+
+**4. The Fix:**
+One must avoid global state updates from initial loads if a newer interaction has started. A common fix is to use a "loading" flag or a "request ID" to check if the result is still relevant. Another fix is to move the initial load logic into a function that checks if the user has already interacted with the form.
+*Note: Using `setTimeout(..., 500)` would only hide the symptom (race condition) and might fail if the network is slower, whereas properly managing async state resolves the root cause.*
+

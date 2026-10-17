@@ -11,6 +11,7 @@ const status = document.getElementById('status');
 
 // Venues currently on screen
 let venues = [];
+let isSearchStarted = false;
 
 /* Mobile menu */
 
@@ -33,6 +34,7 @@ function readFilters() {
 
 async function handleSearch(event) {
   event.preventDefault();
+  isSearchStarted = true;
   status.textContent = 'Шукаємо…';
   results.setAttribute('aria-busy', 'true');
 
@@ -60,8 +62,12 @@ function bindBookButtons() {
 
 /* Initial state: popular venues */
 
-venues = await fetchVenues({ popular: true });
-renderResults(results, venues);
-results.setAttribute('aria-busy', 'false');
-status.textContent = `Популярні майданчики: ${venues.length}`;
-bindBookButtons();
+const initialVenues = await fetchVenues({ popular: true });
+
+if (!isSearchStarted) {
+  venues = initialVenues;
+  renderResults(results, venues);
+  results.setAttribute('aria-busy', 'false');
+  status.textContent = `Популярні майданчики: ${venues.length}`;
+  bindBookButtons();
+}
