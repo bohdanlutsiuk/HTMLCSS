@@ -2,7 +2,7 @@
 
 ## 5.3 Scenario A - Console and Stack Trace
 
-### Issue 1: ReferenceError during booking
+### A1: ReferenceError during booking
 
 **1. Steps to reproduce:**
 1. Open the page `index.html`.
@@ -43,7 +43,7 @@ confirmBooking	@	booking.js:67
 **7. Verification**
 There are no console errors anymore. Application works as intended.
 
-### Issue 2: TypeError during search results rendering
+### A2: TypeError during search results rendering
 
 **1. Steps to reproduce:**
 1. Open the page `index.html`.
@@ -91,7 +91,7 @@ There are no console errors anymore. Application works as intended.
 
 ## 5.4. Scenario B - DOM
 
-### Issue 1: Incorrect selector for mobile menu toggle and double event handlers
+### B1: Incorrect selector for mobile menu toggle and double event handlers
 
 **1. Expected vs Actual behavior:**
 *   **Expected:** The mobile menu toggle button (`.menu-toggle`) should open the navigation menu. The "My bookings" button (`.bookings-toggle`) should only open the bookings dialog.
@@ -125,7 +125,7 @@ The selector in `main.js` should be more specific, targeting `.menu-toggle` inst
 + const menuToggle = document.querySelector('.menu-toggle');
 ```
 
-### Issue 2: Incorrect status message update (Race condition in UI)
+### B2: Incorrect status message update (Race condition in UI)
 
 **1. Expected vs Actual behavior:**
 *   **Expected:** After clicking "Find", the status line (`#status`) should show "Шукаємо…" (Searching...) and then update to "Знайдено: X" once results are loaded.
@@ -152,7 +152,7 @@ The status update logic should be unified within the `async` handler to ensure i
 
 ## 5.5 Scenario C - Event Loop
 
-### Issue 1: UI State Overwrite due to overlapping async operations
+### C1: UI State Overwrite due to overlapping async operations
 
 **1. Steps to reproduce:**
 1. Open the page `index.html`.
@@ -205,4 +205,74 @@ Microtask Queue -> [handleSearch continuation] -> status = 'Знайдено: X'
 **4. The Fix:**
 One must avoid global state updates from initial loads if a newer interaction has started. A common fix is to use a "loading" flag or a "request ID" to check if the result is still relevant. Another fix is to move the initial load logic into a function that checks if the user has already interacted with the form.
 *Note: Using `setTimeout(..., 500)` would only hide the symptom (race condition) and might fail if the network is slower, whereas properly managing async state resolves the root cause.*
+
+### C2: Two click handlers
+
+**1. My guess on execution order**
+```
+// for manual click
+listener 1
+promise 1
+listener 2
+microtask 2
+timeout 1
+
+// fot btn.click()
+listener 1
+listener 2
+promise 1
+microtask 2
+timeout 1
+```
+
+**2. AI-agent guess**
+```
+// for manual click
+listener 1
+promise 1
+listener 2
+microtask 2
+timeout 1
+
+// for btn.click()
+listener 1
+listener 2
+promise 1
+microtask 2
+timeout 1
+```
+
+**3. Actual output**
+```
+// for manual click
+listener 1
+promise 1
+listener 2
+microtask 2
+timeout 1
+
+// for btn.click()
+listener 1
+listener 2
+promise 1
+microtask 2
+timeout 1
+```
+
+**4. Answers**  
+In the case of user click browser resolves first listener, then its microtasks, before resolving the second listener. 
+In the case of executing `btn.click()`, 'click()' is added to call stack and that's why microtasks are not executed before listener 2 finishes. There we get logical order of: click() as the only task in call stack -> microtasks(promise, queueMicrotask) -> macrotasks(timeout).
+
+## 5.6 Final checks
+
+| Behavious from TS            | Before fixes                                                                                                              | After fixes                                                                                       |
+|:-----------------------------|:--------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------|
+| **3.1 Header і mobile menu** | Mobile menu button doesn't work; Bookings button has double listeners and toggles menu (Issue B1).                        | **Fixed.** Selector in `main.js` updated to `.menu-toggle`.                                       |
+| **3.2 Початковий стан**      | Status message might be overwritten by "Шукаємо..." if user clicks "Знайти" quickly (Issue C1).                           | **Fixed.** Added `isSearchStarted` flag to prevent initial load from overwriting user search.     |
+| **3.3 Пошук**                | Status message flickering due to double listeners (Issue B2). TypeError when filtering "All" due to JSON typo (Issue A2). | **Fixed.** Unified status update in `handleSearch` and corrected `pricePerHour` in `venues.json`. |
+| **3.4 Картки**               | "Book" buttons stop working after search (Issue 2 in Category A/B documentation).                                         | **Not fixed.** Cards are not binded after search.                                                 |
+| **3.5 Діалог бронювання**    | `ReferenceError` when clicking "Confirm" (Issue A1).                                                                      | **Fixed.** Corrected `renderBookingCount` function call in `booking.js`.                          |
+| **3.6 Мої бронювання**       | Works, but triggered by wrong button on mobile (Issue B1).                                                                | **Fixed.** Triggered by the correct button after fixing B1.                                       |
+| **3.7 Console**              | Contains `ReferenceError` and `TypeError`.                                                                                | **Fixed.** Critical errors resolved; console is clean during standard operations.                 |
+
 
