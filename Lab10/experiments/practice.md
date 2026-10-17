@@ -34,7 +34,7 @@ confirmBooking	@	booking.js:67
     *   **Denied:** Function and its call are located in the same file which is `booking.js`. Hoisting is also verified not to be the culprit. 
 
 **6. Patch:**
-```javascript
+```
 // booking.js:67
 -  renderBookingsCount();
 +  renderBookingCount();
@@ -88,3 +88,39 @@ Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 't
 
 **7. Verification**
 There are no console errors anymore. Application works as intended.
+
+## 5.4. Scenario B - DOM
+
+### Issue 1: Incorrect selector for mobile menu toggle and double event handlers
+
+**1. Expected vs Actual behavior:**
+*   **Expected:** The mobile menu toggle button (`.menu-toggle`) should open the navigation menu. The "My bookings" button (`.bookings-toggle`) should only open the bookings dialog.
+*   **Actual:** The mobile menu toggle button does not work at all. Instead, clicking the "My bookings" button triggers both the navigation menu (on mobile) and the bookings dialog.
+*   **Specific Defect:** In `main.js` (line 17), the code uses `document.querySelector('.site-header button')`. This selector picks the *first* button found in the header, which is `.bookings-toggle`. As a result, the menu toggle logic is incorrectly attached to the bookings button, while the actual menu button is left without a listener. Furthermore, `booking.js` (line 76) also attaches a listener to `.bookings-toggle`, leading to two handlers on one button.
+
+**2. Elements in DevTools:**
+*   **Element:** `button.menu-toggle`
+    *   **Event Listeners:** Empty (no listeners attached).
+*   **Element:** `button.bookings-toggle`
+    *   **Attributes:** Incorrectly receives `aria-expanded` attributes during interaction due to `main.js`.
+    *   **Event Listeners:** Contains two `click` listeners (one from `main.js` and one from `booking.js`).
+
+**3. Console verification:**
+*   `document.querySelector('.site-header button') === document.querySelector('.bookings-toggle')` returns `true`.
+*   `getEventListeners(document.querySelector('.menu-toggle'))` shows no `click` handlers.
+*   `getEventListeners(document.querySelector('.bookings-toggle'))` shows an array of 2 `click` handlers.
+
+**4. Discrepancy:**
+The code expects `menuToggle` to refer to the menu button, but the CSS selector `.site-header button` is too broad and hits the bookings button first in the DOM order. This causes a functional collision where one button performs two unrelated actions while the other button is dead.
+
+**5. DOM Breakpoint:**
+Setting a "Subtree modifications" breakpoint on `.site-header` shows that clicking `.bookings-toggle` triggers class changes on `#site-nav`, confirming the listener is misbound.
+
+**6. AI Analysis & Patch:**
+The selector in `main.js` should be more specific, targeting `.menu-toggle` instead of any button in the header.
+
+```
+// main.js:17
+- const menuToggle = document.querySelector('.site-header button');
++ const menuToggle = document.querySelector('.menu-toggle');
+```
