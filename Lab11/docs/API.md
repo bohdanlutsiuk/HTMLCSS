@@ -1,0 +1,14 @@
+# API documentation
+
+| Question                                                      | What docs say                                                                 | What request shows                                                                           |
+|---------------------------------------------------------------|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Ендпоїнт пошуку за назвою, параметри                          | `/search/shows?q=:query`                                                      | Returns an array of matches with relevance scores and full show info                         |
+| Форма відповіді пошуку                                        | JSON array of objects, each containing `score` and `show` (full show info)    | `[{"score": 0.89, "show": {...}}, ...]`                                                      |
+| Ендпоїнт серіалу; як отримати епізоди й акторів одним запитом | `/shows/:id`; use `?embed[]=episodes&embed[]=cast`                            | Detailed show object with `_embedded` property containing episodes and cast                  |
+| Поля серіалу, що можуть бути `null` (з прикладом серіалу)     | `officialSite`, `webChannel`, `dvdCountry`, `image`, `summary` can be null    | Show #1 ("Under the Dome") has `webChannel: null` and `dvdCountry: null`                     |
+| Що повертає пошук без результатів                             | Documentation doesn't specify explicitly, but implies no results              | Returns an empty array: `[]`                                                                 |
+| Що повертає неіснуючий id                                     | Returns a HTTP 404 response                                                   | HTTP 404 Not Found error                                                                     |
+| Ліміт запитів і що робити на 429                              | At least 20 calls every 10 seconds; back off for a few seconds and retry      | Server returns HTTP 429 when limit is exceeded (standard REST behavior)                      |
+| Кешування: що кешує TVmaze і що — браузер                     | TVmaze caches output for 60 min; images can be cached indefinitely by browser | `Cache-Control` headers specify public caching durations                                     |
+| CORS: що обіцяє документація і що показав експеримент 12      | All endpoints are CORS enabled; no JSONP or proxying needed                   | `Access-Control-Allow-Origin: *` header is present in responses                              |
+| Ліцензія й атрибуція                                          | Licensed under CC BY-SA; must credit TVmaze by linking back                   | Data is free to use with proper attribution                                                  |
