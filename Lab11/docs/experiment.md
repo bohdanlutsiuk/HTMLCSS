@@ -178,7 +178,7 @@ null
 ```
 
 </td>
-            <td></td>
+            <td>The <code>date</code> header is not in the default safe-list for CORS-fetch, so <code>headers.get('date')</code> returns <code>null</code>. The <code>keys()</code> iterator also only includes the safe-listed headers <code>content-type</code> and <code>cache-control</code>.</td>
         </tr>
         <tr>
             <td>8</td>
